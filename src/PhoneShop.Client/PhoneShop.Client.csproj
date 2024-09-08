@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhoneShopShareLibrary\PhoneShopShareLibrary.csproj" />
+    <ProjectReference Include="..\PhoneShop.ShareLibrary\PhoneShop.ShareLibrary.csproj" />
   </ItemGroup>
 
 </Project>

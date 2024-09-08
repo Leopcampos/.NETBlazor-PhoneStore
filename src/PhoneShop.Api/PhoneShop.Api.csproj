@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhoneShopShareLibrary\PhoneShopShareLibrary.csproj" />
-    <ProjectReference Include="..\PhoneStoreClient\PhoneStoreClient.csproj" />
+    <ProjectReference Include="..\PhoneShop.Client\PhoneShop.Client.csproj" />
+    <ProjectReference Include="..\PhoneShop.ShareLibrary\PhoneShop.ShareLibrary.csproj" />
   </ItemGroup>
 
 </Project>
