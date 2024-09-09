@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace PhoneShop.ShareLibrary;
+namespace PhoneShop.ShareLibrary.Models;
 
 public class Product
 {
@@ -17,4 +17,5 @@ public class Product
     public string? Base64Img { get; set; }
     public int Quantity { get; set; }
     public DateTime DateUploades { get; set; } = DateTime.Now;
+    public bool Featured { get; set; }
 }

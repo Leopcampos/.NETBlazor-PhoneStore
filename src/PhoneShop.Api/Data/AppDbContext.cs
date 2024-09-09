@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PhoneShop.ShareLibrary;
+using PhoneShop.ShareLibrary.Models;
 
 namespace PhoneShop.Api.Data;
 
