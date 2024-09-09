@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhoneShop.ShareLibrary.Interfaces;
 using PhoneShop.ShareLibrary.Models;
+using PhoneShop.ShareLibrary.Responses;
 
 namespace PhoneShop.Api.Controllers;
 
@@ -15,9 +16,18 @@ public class ProductsController : ControllerBase
         this.productService = productService;
     }
 
-    //[HttpGet]
-    //public async Task<ActionResult<List<Product>>> GetAllProducts(bool featured)
-    //{
+    [HttpGet]
+    public async Task<ActionResult<List<Product>>> GetAllProducts(bool featured)
+    {
+        var products = await productService.GetAllProducts(featured);
+        return Ok(products);
+    }
 
-    //}
+    [HttpPost]
+    public async Task<ActionResult<ServiceReponse>> AddProduct(Product model)
+    {
+        if (model is null) return BadRequest("Model is null");
+        var response = await productService.AddProduct(model);
+        return Ok(response);
+    }
 }
