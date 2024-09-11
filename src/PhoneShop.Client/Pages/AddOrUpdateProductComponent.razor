@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <EditForm Model="MyProduct" Enhance OnInvalidSubmit="HandleSaveProduct">
+            <EditForm Model="MyProduct" OnValidSubmit="HandleSaveProduct">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
                 <div class="card">
@@ -11,22 +11,22 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label class="form-label">Name</label>
-                            <InputText @bind-Value="MyProduct.Name" class="form-control"></InputText>
+                            <InputText @bind="MyProduct.Name" class="form-control"></InputText>
                         </div>
                         <div class="form-group mt-3">
                             <label class="form-label">Price</label>
-                            <InputNumber @bind-Value="MyProduct.Price" class="form-control"></InputNumber>
+                            <InputNumber @bind-Value="MyProduct.Price" class="form-control" TValue="decimal"></InputNumber>
                         </div>
                         <div class="form-group mt-3">
                             <label class="form-label">Quantity</label>
-                            <InputNumber @bind-Value="MyProduct.Quantity" class="form-control"></InputNumber>
+                            <InputNumber @bind-Value="MyProduct.Quantity" class="form-control" TValue="int"></InputNumber>
                         </div>
                         <div class="form-group mt-3">
                             <label class="form-label">Description</label>
-                            <InputTextArea @bind-Value="MyProduct.Description" class="form-control"></InputTextArea>
+                            <InputTextArea @bind="MyProduct.Description" class="form-control"></InputTextArea>
                         </div>
                         <div class="form-group mt-3">
-                            <label class="form-label" @(ImageUploadMessage= "?":"text-danger")>
+                            <label class="form-label @(ImageUploadMessage == "" ? "" : "text-danger")">
                                 @(ImageUploadMessage == "" ? "Upload Imagem" : ImageUploadMessage)
                             </label>
                             <InputFile class="form-control" OnChange="UploadImage"></InputFile>
@@ -36,7 +36,7 @@
                         <div class="form-group mt-3">
                             @if (ShowSaveButton)
                             {
-                                <button type="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i>Save Product</button>
+                                <button type="submit" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Save Product</button>
                             }
                             <BusyButtonComponent ShowBusyButton="ShowBusyButton"></BusyButtonComponent>
                         </div>
@@ -50,10 +50,12 @@
 @code {
     Product MyProduct = new();
     string ImageUploadMessage = "";
+    public bool ShowBusyButton { get; set; } = false;
+    public bool ShowSaveButton { get; set; } = true;
 
     async Task HandleSaveProduct()
     {
-
+        // Lógica para salvar o produto
     }
 
     async Task UploadImage(InputFileChangeEventArgs e)
@@ -67,11 +69,9 @@
             var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
             ImageUploadMessage = "";
             MyProduct.Base64Img = imageData;
-            imageData = "";
             return;
         }
 
         ImageUploadMessage = "PNG file needed.";
-        return;
     }
 }
