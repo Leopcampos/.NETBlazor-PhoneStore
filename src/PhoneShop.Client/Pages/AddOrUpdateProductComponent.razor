@@ -46,16 +46,35 @@
         </div>
     </div>
 </div>
+<MessageDialog @ref="messageDialog"></MessageDialog>
 
 @code {
     Product MyProduct = new();
     string ImageUploadMessage = "";
+    MessageDialog? messageDialog;
     public bool ShowBusyButton { get; set; } = false;
     public bool ShowSaveButton { get; set; } = true;
 
     async Task HandleSaveProduct()
     {
-        // Lógica para salvar o produto
+        ShowSaveButton = false;
+        ShowBusyButton = !ShowSaveButton;
+
+        if (string.IsNullOrEmpty(MyProduct.Base64Img))
+        {
+            messageDialog!.SetDialogValues("warning", "You nesse to choose image");
+            SetMessageDialog();
+            return;
+        }
+
+        var (flag, message) = await ProductService.AddProduct(MyProduct);
+        if (flag)
+            messageDialog!.SetDialogValues("success", message);
+        else
+            messageDialog!.SetDialogValues("danger", message);
+
+        SetMessageDialog();
+        return;
     }
 
     async Task UploadImage(InputFileChangeEventArgs e)
@@ -73,5 +92,13 @@
         }
 
         ImageUploadMessage = "PNG file needed.";
+    }
+
+    private async void SetMessageDialog()
+    {
+        await messageDialog!.ShowMessage();
+        ShowBusyButton = false;
+        ShowSaveButton = !ShowBusyButton;
+        StateHasChanged();
     }
 }
